@@ -1,0 +1,27 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.draggableBox {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 100px;
+  height: 35px;
+  cursor: pointer;
+  border-radius: 5px;
+  border-color: rgb(163, 163, 163);
+  border-width: 1px;
+  border-style: solid;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.draggableBox p {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+  font-size: 16px;
+  user-select: none;
+}
