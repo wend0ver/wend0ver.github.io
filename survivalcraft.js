@@ -139,68 +139,98 @@ const recipes = [
   },
   {
     "equation": {
-      "ingredients": ["🌳tree", "🌱seed"],
-      "equals": ["🌳tree", "🌱seed", "🥜nut"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🌳tree", "🥜nut"],
-      "equals": ["🌳tree", "🥑avocado", "🥜nut"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🥑avocado", "🥑avocado"],
-      "equals": ["🗑️compost"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🗑️compost", "🥑avocado"],
-      "equals": ["⚡energy"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🥜nut", "🥑avocado"],
-      "equals": ["🌱seed"]
+      "ingredients": ["🌳tree", "🪓axe"],
+      "equals": ["🪓axe", "🪵wood", "🌱seed"]
     }
   },
   {
     "equation": {
       "ingredients": ["🌱seed", "🌱seed"],
+      "equals": ["🌳tree"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🪵wood", "🪵wood"],
+      "equals": ["🪓axe"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🪓axe", "🪵wood"],
+      "equals": ["🪓axe", "🪵plank", "🪵plank"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🪓axe", "🌱seed"],
+      "equals": ["🪓axe", "🫚roots", "🫚roots"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🫚roots", "💧water"],
+      "equals": ["🔩pipe"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🫚roots", "🫚roots"],
+      "equals": ["💧water"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["💧water", "💧water"],
+      "equals": ["🌊river"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["💧water", "🪵plank"],
+      "equals": ["💧water", "💧water"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🔩pipe", "🪵plank"],
+      "equals": ["🏭watermill"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🏭watermill", "💧water"],
+      "equals": ["⚡energy", "🏭watermill"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🏭watermill", "🌊river"],
+      "equals": ["🪫electricity", "🏭watermill"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["⚡energy", "🫚roots"],
+      "equals": ["🌳tree", "💧water"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["⚡energy", "🪫electricity"],
+      "equals": ["🏭factory"]
+    }
+  },
+  {
+    "equation": {
+      "ingredients": ["🏭factory", "🌱seed"],
       "equals": ["🚜farm"]
     }
   },
   {
     "equation": {
-      "ingredients": ["🚜farm", "⚡energy"],
-      "equals": ["🚜tractor", "🚜farm", "⚡energy"]
+      "ingredients": ["🚜farm", "💧water"],
+      "equals": ["🌳tree", "🌳tree", "🌳tree"]
     }
   },
-  {
-    "equation": {
-      "ingredients": ["🚜tractor", "⚡energy"],
-      "equals": ["🪫electricity", "🚜farm", "⚡energy"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🥜nut", "🥜nut"],
-      "equals": ["🥜nut", "🐿️squirrel"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🐿️squirrel", "🪫electricity"],
-      "equals": ["🤖robot"]
-    }
-  },
-  {
-    "equation": {
-      "ingredients": ["🤖robot", "🚜farm"],
-      "equals": ["💰money"]
-    }
-  }
 ]
