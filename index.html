@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
+  <title>wendover | Home</title>
 
   <style>
     body {
@@ -13,6 +13,9 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      background: linear-gradient(120deg, rgba(2, 0, 36, 1) 0%, rgba(56, 56, 122, 1) 32%, rgba(149, 41, 158, 1) 71%, rgba(0, 212, 255, 1) 100%);
+      background-size: 200% 200%;
+      overflow: hidden;
     }
 
     .container {
@@ -26,22 +29,68 @@
     a:hover,
     a:active {
       text-decoration: none;
+      color: white;
     }
 
     .box {
-      width: 150px;
-      height: 35px;
+      width: 50%;
+      height: 50px;
       cursor: pointer;
-      border-radius: 5px;
-      border: 1px solid rgb(163, 163, 163);
+      border-radius: 15px;
+      border: 2px solid rgb(163, 163, 163);
       display: flex;
+      position: absolute;
       align-items: center;
       justify-content: center;
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
       font-size: 16px;
       text-align: center;
       user-select: none;
-      color: black;
+      color: white;
+      left: 25%;
+      z-index: 5;
+    }
+
+    .social {
+      width: 50%;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 15px;
+      border: 2px solid rgb(163, 163, 163);
+      display: flex;
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 16px;
+      text-align: center;
+      user-select: none;
+      color: white;
+      left: 25%;
+      z-index: 5;
+      bottom: 15px;
+    }
+
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      animation: fadeInOut 3s ease-in-out infinite;
+      z-index: -5;
+    }
+
+    @keyframes fadeInOut {
+
+      0%,
+      100% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
     }
   </style>
 </head>
@@ -49,15 +98,33 @@
 <body>
   <div class="container">
     <div class="box">
-      <a href="https://wend0ver.github.io/survivalcraft">🌎survival craft</a>
+      <p>More Information Coming Soon</p>
     </div>
-    <div class="box">
-      <a href="">⚠️ Coming Very Soon ⚠️</a>
-    </div>
-    <div class="box">
-      <a href="">⚠️coming soon⚠️</a>
+    <div class="social">
+      <a href="https://github.com/wend0ver">GitHub ⠀</a>
+      <a href="https://discord.com/users/574633876601831435">⠀ Discord ⠀</a>
+      <a href="https://www.youtube.com/channel/UCaSBvI8W6PopIvTloPzGfZw">⠀ YouTube</a>
     </div>
   </div>
+
+  <script>
+    function createCircle() {
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+      const size = Math.random() * 50 + 20; // Circle size between 20px and 70px
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+      circle.style.top = `${Math.random() * 100}vh`;
+      circle.style.left = `${Math.random() * 100}vw`;
+      document.body.appendChild(circle);
+
+      setTimeout(() => {
+        circle.remove();
+      }, 3000); // Circle exists for 3 seconds (same as animation duration)
+    }
+
+    setInterval(createCircle, 100); // Create a circle every second
+  </script>
 </body>
 
 </html>
