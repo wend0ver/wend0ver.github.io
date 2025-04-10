@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donate</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p.description {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .goal-text {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .progress-container {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      height: 25px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #28a745;
+      border-radius: 20px 0 0 20px;
+      transition: width 0.4s ease;
+    }
+
+    .amount-display {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #444;
+    }
+
+    .donate-btn {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .donate-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="fundraiserImage" src="" alt="Fundraiser Image">
+    <h1 id="title">Help Wendover</h1>
+    <p class="description" id="description">We’re raising funds to help Wendover. Every dollar counts!</p>
+
+    <div class="goal-text" id="goalText">Goal: $1,000</div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="amount-display" id="amountDisplay">$0 raised</div>
+
+    <button class="donate-btn" id="donateBtn">Donate $1</button>
+  </div>
+
+  <script>
+    function getURLParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    const img = getURLParameter('img') || '';
+    const main = getURLParameter('main') || 'Help Wendover';
+    const reason = getURLParameter('reason') || 'We’re raising funds to help Wendover. Every dollar counts!';
+
+    document.getElementById('title').innerText = main;
+    document.getElementById('description').innerText = reason;
+    if (img) {
+      document.getElementById('fundraiserImage').src = img;
+    }
+
+    let goal = localStorage.getItem('goal') ? parseInt(localStorage.getItem('goal')) : 10;
+    let current = localStorage.getItem('current') ? parseInt(localStorage.getItem('current')) : 0;
+    let multiplicationCount = localStorage.getItem('multiplicationCount') ? parseInt(localStorage.getItem('multiplicationCount')) : 0;
+
+    function updateProgress() {
+      const progress = (current / goal) * 100;
+      const bar = document.getElementById('progressBar');
+      bar.style.width = progress + '%';
+      document.getElementById('amountDisplay').innerText = `$${current.toLocaleString()} raised`;
+
+      if (multiplicationCount > 0) {
+        document.getElementById('goalText').innerText = `Goal: $${goal.toLocaleString()} - Tier ${multiplicationCount + 1} Donor`;
+      } else {
+        document.getElementById('goalText').innerText = `Goal: $${goal.toLocaleString()}`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('donateBtn').addEventListener('click', () => {
+        current += 1;
+        localStorage.setItem('current', current);
+
+        if (current >= goal) {
+          goal *= 2;
+          multiplicationCount += 1;
+          localStorage.setItem('goal', goal);
+          localStorage.setItem('multiplicationCount', multiplicationCount);
+        }
+
+        updateProgress();
+      });
+
+      updateProgress();
+    });
+  </script>
+</body>
+</html>
