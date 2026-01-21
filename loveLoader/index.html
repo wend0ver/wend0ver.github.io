@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Love Editor</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    #sidebar {
+      width: 250px;
+      border-right: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      background: #151515;
+      color: #fff;
+    }
+
+    #editor {
+      flex: 1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .tree-item {
+      cursor: pointer;
+      padding: 4px;
+      user-select: none;
+    }
+
+    .tree-item:hover {
+      background: #0050aa;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="sidebar">
+    <input type="file" id="zipInput" accept=".zip" />
+    <button id="saveZip">Save ZIP</button>
+    <button id="loadLove">Load Love</button>
+    <hr />
+    <div id="fileTreeContainer">
+      <div id="fileTree"></div>
+    </div>
+    <button id="addFile">Add File</button>
+  </div>
+
+  <div id="editor"></div>
+
+  <!-- Fflate -->
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
+
+  <!-- Monaco Loader -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
