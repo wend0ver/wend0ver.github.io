@@ -1,130 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>wendover | Home</title>
-
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(120deg, rgba(2, 0, 36, 1) 0%, rgba(56, 56, 122, 1) 32%, rgba(149, 41, 158, 1) 71%, rgba(0, 212, 255, 1) 100%);
-      background-size: 200% 200%;
-      overflow: hidden;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    a:link,
-    a:visited,
-    a:hover,
-    a:active {
-      text-decoration: none;
-      color: white;
-    }
-
-    .box {
-      width: 50%;
-      height: 50px;
-      cursor: pointer;
-      border-radius: 15px;
-      border: 2px solid rgb(163, 163, 163);
-      display: flex;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-      font-size: 16px;
-      text-align: center;
-      user-select: none;
-      color: white;
-      left: 25%;
-      z-index: 5;
-    }
-
-    .social {
-      width: 50%;
-      height: 50px;
-      cursor: pointer;
-      border-radius: 15px;
-      border: 2px solid rgb(163, 163, 163);
-      display: flex;
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-      font-size: 16px;
-      text-align: center;
-      user-select: none;
-      color: white;
-      left: 25%;
-      z-index: 5;
-      bottom: 15px;
-    }
-
-
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.8);
-      opacity: 0;
-      animation: fadeInOut 3s ease-in-out infinite;
-      z-index: -5;
-    }
-
-    @keyframes fadeInOut {
-
-      0%,
-      100% {
-        opacity: 0;
-      }
-
-      50% {
-        opacity: 0.8;
-      }
-    }
-  </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Simple Redirect</title>
 </head>
-
 <body>
-  <div class="container">
-    <div class="box">
-      <p>More Information Coming Soon</p>
-    </div>
-    <div class="social">
-      <a href="https://github.com/wend0ver">GitHub ⠀</a>
-      <a href="https://discord.com/users/574633876601831435">⠀ Discord ⠀</a>
-      <a href="https://www.youtube.com/channel/UCaSBvI8W6PopIvTloPzGfZw">⠀ YouTube</a>
-    </div>
-  </div>
+	<h2>Enter a URL</h2>
+	
+	<input type="text" id="urlInput" placeholder="https://example.com" size="40">
+	<button onclick="goToUrl()">Go</button>
 
-  <script>
-    function createCircle() {
-      const circle = document.createElement('div');
-      circle.classList.add('circle');
-      const size = Math.random() * 50 + 20; // Circle size between 20px and 70px
-      circle.style.width = `${size}px`;
-      circle.style.height = `${size}px`;
-      circle.style.top = `${Math.random() * 100}vh`;
-      circle.style.left = `${Math.random() * 100}vw`;
-      document.body.appendChild(circle);
+	<script>
+		function goToUrl() {
+			let url = document.getElementById("urlInput").value.trim();
 
-      setTimeout(() => {
-        circle.remove();
-      }, 3000); // Circle exists for 3 seconds (same as animation duration)
-    }
+			// Basic normalization: add https if missing
+			if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
+				url = "https://" + url;
+			}
 
-    setInterval(createCircle, 100); // Create a circle every second
-  </script>
+			if (url) {
+				window.location.href = url;
+			}
+		}
+	</script>
 </body>
-
 </html>
