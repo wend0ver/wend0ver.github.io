@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Simple Redirect</title>
+</head>
+<body>
+	<h2>Enter a URL</h2>
+	
+	<input type="text" id="urlInput" placeholder="https://example.com" size="40">
+	<button onclick="goToUrl()">Go</button>
+
+	<script>
+		function goToUrl() {
+			let url = document.getElementById("urlInput").value.trim();
+
+			// Basic normalization: add https if missing
+			if (url && !url.startsWith("http://") && !url.startsWith("https://")) {
+				url = "https://" + url;
+			}
+
+			if (url) {
+				window.location.href = url;
+			}
+		}
+	</script>
+</body>
+</html>
