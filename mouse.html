@@ -1,23 +1,37 @@
-<input id="url" placeholder="idk">
-<button id="start">Start Motion Control</button>
+<input id="url" value="idk">
+<button id="start">Start</button>
+
+<pre id="log"></pre>
 
 <script>
+	const logBox = document.getElementById("log");
+
+	function log(msg) {
+		logBox.textContent += msg + "\n";
+	}
+
 	let accel = {
 		x: 0,
 		y: 0,
 		z: 0
 	};
 
-	document.getElementById("start").addEventListener("click", async () => {
+	document.getElementById("start").onclick = async () => {
+		log("Button pressed");
 
 		if (typeof DeviceMotionEvent.requestPermission === "function") {
+			log("Requesting permission...");
+
 			const permission = await DeviceMotionEvent.requestPermission();
 
+			log("Permission: " + permission);
+
 			if (permission !== "granted") {
-				alert("you gotta click yes");
 				return;
 			}
 		}
+
+		log("Starting motion listener");
 
 		window.addEventListener("devicemotion", (event) => {
 			const a = event.accelerationIncludingGravity;
@@ -27,14 +41,14 @@
 				accel.y = a.y || 0;
 				accel.z = a.z || 0;
 
-				console.log(accel);
+				log(`motion ${accel.x.toFixed(2)} ${accel.y.toFixed(2)} ${accel.z.toFixed(2)}`);
 			}
 		});
 
 		setInterval(() => {
 			const url = document.getElementById("url").value;
 
-			if (!url) return;
+			log("Sending...");
 
 			fetch(url, {
 				method: "POST",
@@ -42,11 +56,10 @@
 					"Content-Type": "application/json"
 				},
 				body: JSON.stringify(accel)
-			}).catch(err => {
-				console.log("error:", err);
-			});
-		}, 17);
+			})
+			.then(r => log("Sent: " + r.status))
+			.catch(e => log("Error: " + e));
 
-		alert("good");
-	});
+		}, 500);
+	};
 </script>
