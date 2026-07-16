@@ -1,7 +1,9 @@
-<input id="url" value="idk">
+<input id="url" value="wss://your-server.com">
 <button id="start">Start</button>
 
 <pre id="log"></pre>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 
 <script>
 	const logBox = document.getElementById("log");
@@ -15,6 +17,8 @@
 		y: 0,
 		z: 0
 	};
+
+	let socket;
 
 	document.getElementById("start").onclick = async () => {
 		log("Button pressed");
@@ -31,6 +35,20 @@
 			}
 		}
 
+		const url = document.getElementById("url").value;
+
+		log("Connecting...");
+
+		socket = io(url);
+
+		socket.on("connect", () => {
+			log("Connected");
+		});
+
+		socket.on("disconnect", () => {
+			log("Disconnected");
+		});
+
 		log("Starting motion listener");
 
 		window.addEventListener("devicemotion", (event) => {
@@ -42,24 +60,11 @@
 				accel.z = a.z || 0;
 
 				log(`motion ${accel.x.toFixed(2)} ${accel.y.toFixed(2)} ${accel.z.toFixed(2)}`);
+
+				if (socket && socket.connected) {
+					socket.emit("mouse", accel);
+				}
 			}
 		});
-
-		setInterval(() => {
-			const url = document.getElementById("url").value;
-
-			log("Sending...");
-
-			fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(accel)
-			})
-			.then(r => log("Sent: " + r.status))
-			.catch(e => log("Error: " + e));
-
-		}, 500);
 	};
 </script>
