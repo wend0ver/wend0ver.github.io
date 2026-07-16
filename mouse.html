@@ -1,8 +1,7 @@
-<input id="url" placeholder="http://10.186.102.85:5000/myMouseAccel/test">
+<input id="url" placeholder="idk">
 <button id="start">Start Motion Control</button>
 
 <script>
-	let acl;
 	let accel = {
 		x: 0,
 		y: 0,
@@ -10,49 +9,44 @@
 	};
 
 	document.getElementById("start").addEventListener("click", async () => {
+
 		if (typeof DeviceMotionEvent.requestPermission === "function") {
 			const permission = await DeviceMotionEvent.requestPermission();
 
 			if (permission !== "granted") {
-				alert("click yes");
+				alert("you gotta click yes");
 				return;
 			}
 		}
 
-		try {
-			acl = new Accelerometer({ frequency: 60 });
+		window.addEventListener("devicemotion", (event) => {
+			const a = event.accelerationIncludingGravity;
 
-			acl.addEventListener("reading", () => {
-				accel.x = acl.x;
-				accel.y = acl.y;
-				accel.z = acl.z;
+			if (a) {
+				accel.x = a.x || 0;
+				accel.y = a.y || 0;
+				accel.z = a.z || 0;
 
 				console.log(accel);
+			}
+		});
+
+		setInterval(() => {
+			const url = document.getElementById("url").value;
+
+			if (!url) return;
+
+			fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(accel)
+			}).catch(err => {
+				console.log("error:", err);
 			});
+		}, 17);
 
-			acl.start();
-
-			setInterval(() => {
-				const url = document.getElementById("url").value;
-
-				if (!url || !acl) return;
-
-				fetch(url, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify(accel)
-				}).catch(err => {
-					console.log("error:", err);
-				});
-			}, 17);
-
-			alert("good");
-
-		} catch (e) {
-			console.error(e);
-			alert("nope: " + e);
-		}
+		alert("good");
 	});
 </script>
