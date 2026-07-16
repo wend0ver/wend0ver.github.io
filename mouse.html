@@ -1,47 +1,58 @@
-<head>
-	<title>accel</title>
-</head>
+<input id="url" placeholder="http://10.186.102.85:5000/myMouseAccel/test">
+<button id="start">Start Motion Control</button>
 
-<body>
-	<input id="url" placeholder="https://example.com/data">
+<script>
+	let acl;
+	let accel = {
+		x: 0,
+		y: 0,
+		z: 0
+	};
 
-	<script>
-		const urlInput = document.getElementById("url");
+	document.getElementById("start").addEventListener("click", async () => {
+		if (typeof DeviceMotionEvent.requestPermission === "function") {
+			const permission = await DeviceMotionEvent.requestPermission();
 
-		let accel = {
-			x: 0,
-			y: 0,
-			z: 0
-		};
+			if (permission !== "granted") {
+				alert("click yes");
+				return;
+			}
+		}
 
-		const acl = new Accelerometer({ frequency: 60 });
+		try {
+			acl = new Accelerometer({ frequency: 60 });
 
-		acl.addEventListener("reading", () => {
-			accel.x = acl.x;
-			accel.y = acl.y;
-			accel.z = acl.z;
+			acl.addEventListener("reading", () => {
+				accel.x = acl.x;
+				accel.y = acl.y;
+				accel.z = acl.z;
 
-			console.log(`Acceleration along the X-axis ${acl.x}`);
-			console.log(`Acceleration along the Y-axis ${acl.y}`);
-			console.log(`Acceleration along the Z-axis ${acl.z}`);
-		});
-
-		setInterval(() => {
-			const url = urlInput.value;
-
-			if (!url) return;
-
-			fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(accel)
-			}).catch(err => {
-				console.error("Send failed:", err);
+				console.log(accel);
 			});
-		}, 17);
 
-		acl.start();
-	</script>
-</body>
+			acl.start();
+
+			setInterval(() => {
+				const url = document.getElementById("url").value;
+
+				if (!url || !acl) return;
+
+				fetch(url, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(accel)
+				}).catch(err => {
+					console.log("error:", err);
+				});
+			}, 17);
+
+			alert("good");
+
+		} catch (e) {
+			console.error(e);
+			alert("nope: " + e);
+		}
+	});
+</script>
