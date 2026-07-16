@@ -1,0 +1,47 @@
+<head>
+	<title>accel</title>
+</head>
+
+<body>
+	<input id="url" placeholder="https://example.com/data">
+
+	<script>
+		const urlInput = document.getElementById("url");
+
+		let accel = {
+			x: 0,
+			y: 0,
+			z: 0
+		};
+
+		const acl = new Accelerometer({ frequency: 60 });
+
+		acl.addEventListener("reading", () => {
+			accel.x = acl.x;
+			accel.y = acl.y;
+			accel.z = acl.z;
+
+			console.log(`Acceleration along the X-axis ${acl.x}`);
+			console.log(`Acceleration along the Y-axis ${acl.y}`);
+			console.log(`Acceleration along the Z-axis ${acl.z}`);
+		});
+
+		setInterval(() => {
+			const url = urlInput.value;
+
+			if (!url) return;
+
+			fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(accel)
+			}).catch(err => {
+				console.error("Send failed:", err);
+			});
+		}, 17);
+
+		acl.start();
+	</script>
+</body>
